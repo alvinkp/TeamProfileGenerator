@@ -2,7 +2,7 @@ const Intern = require('../lib/Intern.js');
 
 describe('Intern sub-class', () =>  {
     describe('Functionality', () => {
-        it("Should store the provided Name, Id, Office Number and Email Address in the Intern object and return those values when called with the corresponding methods", () => {
+        it("Should store the provided Name, Id, School and Email Address in the Intern object and return those values as well as it's Role when called with the corresponding methods", () => {
             
             const myName = "Mike";
             const myId = 2335;

@@ -2,7 +2,7 @@ const Manager = require('../lib/Manager.js');
 
 describe('Manager sub-class', () =>  {
     describe('Functionality', () => {
-        it("Should store the provided Name, Id, Office Number and Email Address in the Manager object and return those values when called with the corresponding methods", () => {
+        it("Should store the provided Name, Id, Office Number and Email Address in the Manager object and return those values as well as it's Role when called with the corresponding methods", () => {
             
             const myName = "John";
             const myId = 605;
