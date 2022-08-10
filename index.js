@@ -4,6 +4,7 @@ const inquirer = require('inquirer');
 const Manager = require("./lib/Manager.js");
 const Engineer = require("./lib/Engineer.js");
 const Intern = require("./lib/Intern.js");
+const genHTML = require("./src/generateHTML.js");
 
 // Variables
 let currentID = 0;
@@ -15,11 +16,15 @@ function updateManager(answer){
     myTeam.push(myManager);
 }
 
-// Use Inquirer to ask questions so HTML Generator can be called
+// Questions for Inquirer to ask
 const introQuestions = [
     { type: 'input', message: 'What is your name?', name: 'mName'},
     { type: 'input', message: `What is your email address?`, name: 'mEmail'},
     { type: 'input', message: 'What is your Office Number?', name: 'mOffice'},
+];
+
+const addMoreQuestions = [
+    { type: 'list', message: 'Which team member would you like to add?', name: 'selection', choices: ['An Engineer', 'An Intern', 'None, I am finished']},
 ];
 
 const engineerQuestions = [
@@ -34,9 +39,6 @@ const internQuestions = [
     { type: 'input', message: 'What is their School?', name: 'iSchool'},
 ];
 
-const addMoreQuestions = [
-    { type: 'list', message: 'Which team member would you like to add?', name: 'selection', choices: ['An Engineer', 'An Intern', 'None, I am finished']},
-];
 
 // Return Current ID 
 function getCurrentID(){
@@ -56,7 +58,7 @@ function addMoreTeammates(){
             case 'An Intern': getAndStoreInterns();
             break;
 
-            case 'None, I am finished': generateHTML();
+            case 'None, I am finished': writeToFile('./dist/index.html', genHTML(myTeam));
             break;
 
             default: console.log("Something Went Wrong");
@@ -86,13 +88,11 @@ function getAndStoreInterns(){
     })
 }
 
-// Call Generate HTML function from external file
-function generateHTML(){
-    console.log("Generate HTML Please!");
-    console.log(myTeam);
-}
 
 // Write File to Dist folder
+function writeToFile(fileName, data) {
+    fs.writeFile(fileName, data)
+}
 
 // Init Function
 function Init(){
