@@ -1,10 +1,11 @@
+// Generate Team Card HTML / Bootstrap code
 function generateTeamCards(teamArray) {
     let compiledCards = [];
     
     for(let i = 0; i < teamArray.length; i++){
         let miscInfo;
         switch(teamArray[i].getRole()){
-            case 'Engineer': miscInfo = `Github: <a href="https://www.github.com/${teamArray[i].getGithub()}">@${teamArray[i].getGithub()}</a>`;
+            case 'Engineer': miscInfo = `Github: <a href="https://www.github.com/${teamArray[i].getGithub()}" target="_blank" rel="noopener noreferrer">@${teamArray[i].getGithub()}</a>`;
             break;
     
             case 'Intern': miscInfo = `School: ${teamArray[i].getSchool()}`;
@@ -15,12 +16,21 @@ function generateTeamCards(teamArray) {
     
             default: console.log("Something Broke in Team Cards!");
         }
-        compiledCards.push(`<div class="card" style="width: 18rem;"> \n <ul class="list-group list-group-flush"> \n <li class="list-group-item">ID: ${teamArray[i].id}</li> \n <li class="list-group-item">Email: <a href = "mailto: ${teamArray[i].email}">${teamArray[i].email}</a> </li> \n <li class="list-group-item">${miscInfo}</li> \n </ul> \n </div>`)
+        compiledCards.push(`
+        <div class="card shadow mx-2 my-3" style="width: 18rem;"> 
+        <img src="./assets/images/${teamArray[i].getRole()}.svg" alt="${teamArray[i].getRole()} svg graphic">
+            <ul class="list-group">
+                <li class="list-group-item h2 font-weight-bold text-center text-white bg-dark">${teamArray[i].getName()}</li>
+                <li class="list-group-item">ID: ${teamArray[i].id}</li>
+                <li class="list-group-item">Email: <a href = "mailto: ${teamArray[i].email}">${teamArray[i].email}</a> </li>
+                <li class="list-group-item">${miscInfo}</li>
+            </ul>
+        </div>`)
     }
     return compiledCards.join('');
 }
 
-
+// Generate overall HTML and insert Generated Team Cards 
 function generateHTMLCode(teamArray) {
     return `
     <!DOCTYPE html>
@@ -36,7 +46,7 @@ function generateHTMLCode(teamArray) {
         
         <body>
             <main>
-                <section class="py-5 text-center container bg-primary">
+                <section class="py-5 text-center container-fluid bg-primary">
                     <div class="row py-lg-5">
                         <div class="col-lg-6 col-md-8 mx-auto">
                             <h1 class="fw-bold text-light">Your Team Roster</h1>
@@ -45,7 +55,7 @@ function generateHTMLCode(teamArray) {
                     </div>
                 </section>
                 <section class="container">
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 justify-content-center">
+                    <div class="container-fluid row py-5 justify-content-center">
                     ${generateTeamCards(teamArray)}
                     </div>
                 </section>
@@ -57,4 +67,5 @@ function generateHTMLCode(teamArray) {
     `
 }
 
+// Export generateHTMLCode function for use elsewhere
 module.exports = generateHTMLCode;
